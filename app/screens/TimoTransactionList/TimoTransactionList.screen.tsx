@@ -24,6 +24,7 @@ export const TimoTransactionListScreen = observer(function TimoTransactionListSc
   return (
     <View testID="TimoTransactionListScreen" style={Style.Container}>
       <Screen
+        unsafe={true}
         style={{ backgroundColor: color.palette.offWhite, paddingBottom: 100 }}
         preset="scroll"
       >

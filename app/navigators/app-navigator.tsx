@@ -14,6 +14,7 @@ import Style from "./Tabs.style"
 import { color } from "../theme"
 import { PFDashboardScreen } from "../screens"
 import { PFTabs } from "./PFTabs"
+import { PFAddNewGoalScreen } from "../screens/PFAddNewGoal/PFAddNewGoal.screen"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -30,6 +31,7 @@ import { PFTabs } from "./PFTabs"
 export type NavigatorParamList = {
   TimoDashboard: undefined
   PFDashboard: undefined
+  AddNewGoal: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -59,6 +61,11 @@ const AppStack = () => {
         options={{ headerTitle: "Personal Finance" }}
         name="PFDashboard"
         component={PFTabs}
+      />
+      <Stack.Screen
+        options={{ headerTitle: "Add New Goal" }}
+        name="AddNewGoal"
+        component={PFAddNewGoalScreen}
       />
     </Stack.Navigator>
   )

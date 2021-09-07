@@ -8,6 +8,7 @@ import { View } from "react-native"
 import { Text } from "../components"
 import { Ionicons } from "@expo/vector-icons"
 import { PFDashboardScreen, PFGameScreen } from "../screens"
+import { PFTemplateScreen } from "../screens/PFTemplateScreen/PFTemplate.screen"
 
 const Tab = createBottomTabNavigator()
 
@@ -32,12 +33,12 @@ const TabItems = (
   {
     headerShown: false,
     key: "home-tab",
-    name: "Tin Chung",
+    name: "Piggy Bank",
     component: PFDashboardScreen,
     layout: ({ focused }) => (
       <View style={Style.TabItemsView}>
         <Ionicons
-          name="md-home"
+          name="cash"
           color={focused ? props.iconStyle.activeColor : props.iconStyle.inactiveColor}
           size={props.iconStyle.size}
         />
@@ -47,7 +48,30 @@ const TabItems = (
             ...Style.TabItemsLabel,
           }}
         >
-          Home
+          Piggy Bank
+        </Text>
+      </View>
+    ),
+  },
+  {
+    headerShown: false,
+    key: "template-tab",
+    name: "Template",
+    component: PFTemplateScreen,
+    layout: ({ focused }) => (
+      <View style={Style.TabItemsView}>
+        <Ionicons
+          name="stats-chart"
+          color={focused ? props.iconStyle.activeColor : props.iconStyle.inactiveColor}
+          size={props.iconStyle.size}
+        />
+        <Text
+          style={{
+            color: focused ? props.iconStyle.activeColor : props.iconStyle.inactiveColor,
+            ...Style.TabItemsLabel,
+          }}
+        >
+          Template
         </Text>
       </View>
     ),
@@ -70,7 +94,7 @@ const TabItems = (
             ...Style.TabItemsLabel,
           }}
         >
-          History
+          Game
         </Text>
       </View>
     ),

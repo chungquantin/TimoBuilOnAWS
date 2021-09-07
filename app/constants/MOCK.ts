@@ -462,7 +462,7 @@ export const MOCK_USER = {
           },
         ],
       },
-      goal_save: {
+      "Goal Save": {
         range: 5000000,
         data: [
           {
