@@ -8,8 +8,12 @@ import React from "react"
 import { useColorScheme } from "react-native"
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens"
 import { navigationRef } from "./navigation-utilities"
+import { TimoTabs } from "./TimoTabs"
+import Style from "./Tabs.style"
+import { color } from "../theme"
+import { PFDashboardScreen } from "../screens"
+import { PFTabs } from "./PFTabs"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -24,25 +28,38 @@ import { navigationRef } from "./navigation-utilities"
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
 export type NavigatorParamList = {
-  welcome: undefined
-  demo: undefined
-  demoList: undefined
+  TimoDashboard: undefined
+  PFDashboard: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<NavigatorParamList>()
 
+const screenOptions: any = {
+  headerShown: true,
+  headerStyle: {
+    ...Style.Header,
+  },
+  headerTitleStyle: {
+    fontWeight: "bold",
+    color: color.text,
+  },
+}
+
 const AppStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
+        ...screenOptions,
       }}
-      initialRouteName="welcome"
+      initialRouteName="TimoDashboard"
     >
-      <Stack.Screen name="welcome" component={WelcomeScreen} />
-      <Stack.Screen name="demo" component={DemoScreen} />
-      <Stack.Screen name="demoList" component={DemoListScreen} />
+      <Stack.Screen options={{ headerShown: false }} name="TimoDashboard" component={TimoTabs} />
+      <Stack.Screen
+        options={{ headerTitle: "Personal Finance" }}
+        name="PFDashboard"
+        component={PFTabs}
+      />
     </Stack.Navigator>
   )
 }
@@ -73,5 +90,5 @@ AppNavigator.displayName = "AppNavigator"
  *
  * `canExit` is used in ./app/app.tsx in the `useBackButtonHandler` hook.
  */
-const exitRoutes = ["welcome"]
+const exitRoutes = ["TimoDashboard"]
 export const canExit = (routeName: string) => exitRoutes.includes(routeName)
