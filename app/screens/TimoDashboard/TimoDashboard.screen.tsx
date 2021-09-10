@@ -1,18 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from "react"
+import React, { useContext } from "react"
 import { Dimensions, Image, View } from "react-native"
 import { observer } from "mobx-react-lite"
 import Style from "./TimoDashboard.style"
 import { color } from "../../theme"
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler"
-import { Text } from "../../components"
+import { Button, Text } from "../../components"
 import { useNavigation } from "@react-navigation/native"
-import { MOCK_USER } from "../../constants/MOCK"
 import { useStores } from "../../models"
+import { emptyUser, GlobalContext } from "../../constants/CONTEXT"
 
 export const TimoDashboardScreen = observer(function TimoDashboardScreen() {
   const { width } = Dimensions.get("screen")
   const { transactionStore } = useStores()
+  const { state, setGlobalState } = useContext(GlobalContext)
   const navigator = useNavigation()
   const RenderBanner = () => (
     <FlatList
@@ -61,12 +62,12 @@ export const TimoDashboardScreen = observer(function TimoDashboardScreen() {
               Spend Account
             </Text>
             <Text style={{ color: color.palette.offGray, fontSize: 13, marginTop: 1 }}>
-              {MOCK_USER.spend_account.code}
+              {state.user.spend_account.code}
             </Text>
           </View>
           <View>
             <Text style={{ fontWeight: "bold", color: color.primary, fontSize: 18 }}>
-              {transactionStore.transactionBalance}
+              {transactionStore.getTransactionBalance(state.user.transactions)}
             </Text>
           </View>
         </View>
@@ -85,7 +86,7 @@ export const TimoDashboardScreen = observer(function TimoDashboardScreen() {
               Term Deposit
             </Text>
             <Text style={{ color: color.palette.offGray, fontSize: 13, marginTop: 1 }}>
-              {MOCK_USER.spend_account.code}
+              {state.user.spend_account.code}
             </Text>
           </View>
           <View>
@@ -93,12 +94,20 @@ export const TimoDashboardScreen = observer(function TimoDashboardScreen() {
           </View>
         </View>
       </View>
+      <Button style={{ backgroundColor: color.palette.timoRed }} onPress={handler.Logout}>
+        <Text style={{ color: color.palette.white }}>Log out</Text>
+      </Button>
     </View>
   )
 
   const handler = {
     OpenPersonalFinance: () => {
       navigator.navigate("PFDashboard" as any)
+    },
+    Logout: () => {
+      setGlobalState({
+        user: emptyUser,
+      })
     },
   }
   return (

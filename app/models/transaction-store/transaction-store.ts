@@ -13,6 +13,17 @@ export const TransactionStoreModel = types
   })
   .extend(withEnvironment)
   .views((self) => ({
+    getTransactionBalance(transactions) {
+      if (transactions.length === 0) return 0
+      return formatByUnit(
+        transactions
+          .map((transaction) =>
+            transaction.type === "IN" ? transaction.amount : transaction.amount * -1,
+          )
+          .reduce((a, b) => a + b),
+        "VND",
+      )
+    },
     get transactionBalance() {
       return formatByUnit(
         self.transactions
@@ -22,6 +33,29 @@ export const TransactionStoreModel = types
           .reduce((a, b) => a + b),
         "VND",
       )
+    },
+    getGroupTransactionByMonthAndYear(
+      transactions,
+    ): {
+      month: string
+      year: string
+      data: Transaction[]
+    }[] {
+      const transactionGroupedByAllMonth = _.groupBy(transactions, (item) => {
+        return `${getMonthFromUnix(item.createdAt) + 1}-${getYearFromUnix(item.createdAt)}`
+      })
+      const transactionList: {
+        month: string
+        year: string
+        data: Transaction[]
+      }[] = Object.keys(transactionGroupedByAllMonth).map((transactionKey) => {
+        return {
+          month: monthList[Number(transactionKey.split("-")[0]) - 1],
+          year: transactionKey.split("-")[1],
+          data: transactionGroupedByAllMonth[transactionKey],
+        }
+      })
+      return transactionList
     },
     get groupTransactionByMonthAndYear(): {
       month: string

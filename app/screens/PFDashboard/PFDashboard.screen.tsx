@@ -6,14 +6,16 @@ import Style from "./PFDashboard.style"
 import { Screen, Text } from "../../components"
 import { color } from "../../theme"
 import { useStores } from "../../models"
-import { MOCK_USER } from "../../constants/MOCK"
+import { MOCK_USER } from "../../constants/RICH_USER"
 import moment from "moment"
 import { formatByUnit } from "../../utils/currency"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { useNavigation } from "@react-navigation/core"
+import { GlobalContext } from "../../constants/CONTEXT"
 
 export const PFDashboardScreen = observer(function PFDashboardScreen() {
   const { transactionStore } = useStores()
+  const { state } = React.useContext(GlobalContext)
   const navigator = useNavigation()
 
   const handler = {
@@ -38,11 +40,11 @@ export const PFDashboardScreen = observer(function PFDashboardScreen() {
             <Text style={{ fontWeight: "bold", color: color.primary }}>Piggy Bank 🐷</Text>
             <Text>Available Balance</Text>
             <Text style={{ fontWeight: "bold", fontSize: 25, marginTop: 5, color: color.primary }}>
-              {transactionStore.transactionBalance}
+              {transactionStore.getTransactionBalance(state.user.transactions)}
             </Text>
           </View>
         </View>
-        {MOCK_USER.piggyBank.goals.map((goal) => (
+        {state.user.piggyBank?.goals.map((goal) => (
           <View key={goal.goal_id} style={{ ...Style.Card }}>
             <View
               style={{

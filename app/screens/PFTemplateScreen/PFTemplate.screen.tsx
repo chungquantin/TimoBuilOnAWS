@@ -1,15 +1,17 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable react-native/no-inline-styles */
 import React from "react"
 import { View } from "react-native"
 import { observer } from "mobx-react-lite"
-import { Screen, Text } from "../../components"
+import { Button, Screen, Text } from "../../components"
 import Style from "./PFTemplate.style"
 import { color } from "../../theme"
 import { formatByUnit } from "../../utils/currency"
-import { MOCK_USER } from "../../constants/MOCK"
+import { MOCK_USER } from "../../constants/RICH_USER"
 import { ProgressChartData } from "react-native-chart-kit/dist/ProgressChart"
 import { ChartConfig } from "react-native-chart-kit/dist/HelperTypes"
 import { ProgressChart } from "react-native-chart-kit"
+import { GlobalContext } from "../../constants/CONTEXT"
 
 const chartConfig: ChartConfig = {
   backgroundGradientFrom: color.background,
@@ -37,6 +39,7 @@ const colorList = [
 ]
 
 export const PFTemplateScreen = observer(function PFTemplateScreen() {
+  const { state } = React.useContext(GlobalContext)
   const data: ProgressChartData = {
     labels: Object.keys(MOCK_USER.template.Sheet1), // optional
     data: Object.keys(MOCK_USER.template.Sheet1).map(
@@ -49,6 +52,7 @@ export const PFTemplateScreen = observer(function PFTemplateScreen() {
     ),
     colors: colorList,
   }
+  const TEMPLATE = state.user.template?.[Object.keys(state.user.template)[0]] || {}
   return (
     <View testID="PFTemplateScreen" style={Style.Container}>
       <Screen unsafe={true} preset="scroll">
@@ -56,7 +60,7 @@ export const PFTemplateScreen = observer(function PFTemplateScreen() {
           <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
             <Text style={{ fontWeight: "bold" }}>Template</Text>
             <Text style={{ color: color.palette.offGray }}>
-              {Object.keys(MOCK_USER.template)[0]}
+              {Object.keys(state.user.template)[0]}
             </Text>
           </View>
           <View
@@ -68,7 +72,17 @@ export const PFTemplateScreen = observer(function PFTemplateScreen() {
               borderBottomWidth: 1,
             }}
           >
-            <ProgressChart
+            {Object.keys(state.user.template).length !== 0 ? (
+              <></>
+            ) : (
+              <View style={{ alignItems: "center", width: "100%" }}>
+                <Text>No template</Text>
+                <Button style={{ width: "100%", marginTop: 20, backgroundColor: color.primary }}>
+                  <Text style={{ color: color.palette.white }}>Add new template</Text>
+                </Button>
+              </View>
+            )}
+            {/*<ProgressChart
               withCustomBarColorFromData
               data={data}
               width={300}
@@ -77,10 +91,10 @@ export const PFTemplateScreen = observer(function PFTemplateScreen() {
               radius={32}
               chartConfig={chartConfig}
               hideLegend={true}
-            />
+            /> */}
           </View>
           <View style={{ marginTop: 10 }}>
-            {Object.keys(MOCK_USER.template.Sheet1).map((category, index) => (
+            {Object.keys(TEMPLATE).map((category, index) => (
               <View
                 key={category}
                 style={{
@@ -104,17 +118,18 @@ export const PFTemplateScreen = observer(function PFTemplateScreen() {
                 </View>
                 <View style={{ flex: 1, alignItems: "flex-end" }}>
                   <Text style={{ color: color.palette.timoPurple, fontWeight: "bold" }}>
-                    {formatByUnit(MOCK_USER.template.Sheet1[category].range, "VND")}
+                    {state.user.template && formatByUnit(TEMPLATE[category].range, "VND")}
                   </Text>
                   <Text style={{ marginTop: 5, fontSize: 12, color: color.palette.offGray }}>
-                    {formatByUnit(
-                      MOCK_USER.template.Sheet1[category].data
-                        .map((transaction) =>
-                          transaction.type === "IN" ? transaction.amount : transaction.amount,
-                        )
-                        .reduce((a, b) => a + b),
-                      "VND",
-                    )}
+                    {state.user.template &&
+                      formatByUnit(
+                        TEMPLATE[category].data
+                          .map((transaction) =>
+                            transaction.type === "IN" ? transaction.amount : transaction.amount,
+                          )
+                          .reduce((a, b) => a + b),
+                        "VND",
+                      )}
                   </Text>
                 </View>
               </View>

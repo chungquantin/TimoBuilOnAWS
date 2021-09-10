@@ -33,17 +33,17 @@ export const TransactionItem = observer(function TransactionItem({
         </View>
         <View style={{ flex: 1.5, ...Style.MiddleContainer, alignItems: "center" }}>
           {/* TODO add select category button */}
-          {transaction.category && <Text style={{ fontSize: 10 }}>{transaction.category}</Text>}
+          {<Text style={{ fontSize: 10 }}>{transaction.category}</Text>}
         </View>
         <View style={{ flex: 2, ...Style.MiddleContainer, alignItems: "flex-end" }}>
           <Text>
             {transaction.type === "IN" ? (
               <Text style={{ ...Style.TransactionAmount, color: color.palette.timoYellow }}>
-                +{formatByUnit(transaction.amount, transaction.currency)}
+                +{formatByUnit(transaction.amount, "VND")}
               </Text>
             ) : (
               <Text style={{ ...Style.TransactionAmount, color: color.palette.timoBlue }}>
-                -{formatByUnit(transaction.amount, transaction.currency)}
+                -{formatByUnit(transaction.amount, "VND")}
               </Text>
             )}
           </Text>

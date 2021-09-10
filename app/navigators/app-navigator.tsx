@@ -4,7 +4,7 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import React from "react"
+import React, { useContext } from "react"
 import { useColorScheme } from "react-native"
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
@@ -12,26 +12,17 @@ import { navigationRef } from "./navigation-utilities"
 import { TimoTabs } from "./TimoTabs"
 import Style from "./Tabs.style"
 import { color } from "../theme"
-import { PFDashboardScreen } from "../screens"
 import { PFTabs } from "./PFTabs"
 import { PFAddNewGoalScreen } from "../screens/PFAddNewGoal/PFAddNewGoal.screen"
+import { GlobalContext } from "../constants/CONTEXT"
+import { AccountDashboardScreen, TransactionCreationScreen } from "../screens"
 
-/**
- * This type allows TypeScript to know what routes are defined in this navigator
- * as well as what properties (if any) they might take when navigating to them.
- *
- * If no params are allowed, pass through `undefined`. Generally speaking, we
- * recommend using your MobX-State-Tree store(s) to keep application state
- * rather than passing state through navigation params.
- *
- * For more information, see this documentation:
- *   https://reactnavigation.org/docs/params/
- *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
- */
 export type NavigatorParamList = {
+  AccountDashboard: undefined
   TimoDashboard: undefined
   PFDashboard: undefined
   AddNewGoal: undefined
+  TransactionCreation: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -49,6 +40,7 @@ const screenOptions: any = {
 }
 
 const AppStack = () => {
+  const { state } = useContext(GlobalContext)
   return (
     <Stack.Navigator
       screenOptions={{
@@ -56,17 +48,38 @@ const AppStack = () => {
       }}
       initialRouteName="TimoDashboard"
     >
-      <Stack.Screen options={{ headerShown: false }} name="TimoDashboard" component={TimoTabs} />
-      <Stack.Screen
-        options={{ headerTitle: "Personal Finance" }}
-        name="PFDashboard"
-        component={PFTabs}
-      />
-      <Stack.Screen
-        options={{ headerTitle: "Add New Goal" }}
-        name="AddNewGoal"
-        component={PFAddNewGoalScreen}
-      />
+      {state.user.id !== "" ? (
+        <>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="TimoDashboard"
+            component={TimoTabs}
+          />
+          <Stack.Screen
+            options={{ headerTitle: "Personal Finance" }}
+            name="PFDashboard"
+            component={PFTabs}
+          />
+          <Stack.Screen
+            options={{ headerTitle: "Add New Goal" }}
+            name="AddNewGoal"
+            component={PFAddNewGoalScreen}
+          />
+          <Stack.Screen
+            options={{ headerTitle: "Add New Transaction" }}
+            name="TransactionCreation"
+            component={TransactionCreationScreen}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            options={{ headerShown: true, headerTitle: "Account" }}
+            name="AccountDashboard"
+            component={AccountDashboardScreen}
+          />
+        </>
+      )}
     </Stack.Navigator>
   )
 }
