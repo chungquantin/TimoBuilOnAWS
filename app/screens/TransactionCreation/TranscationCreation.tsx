@@ -14,6 +14,7 @@ export const TransactionCreationScreen = observer(function TransactionCreationSc
   const { setGlobalState, state } = React.useContext(GlobalContext)
   const { transactionStore } = useStores()
   const TEMPLATE = state.user.template?.[Object.keys(state.user.template)[0]]
+  const TEMPLATE_NAME = state.user.template && Object.keys(state.user.template)[0]
   const [selectedCategory, setSelectedCategory] = React.useState(Object.keys(TEMPLATE)[0])
   const [formValues, setFormValues] = React.useState<{
     amount: number
@@ -49,23 +50,38 @@ export const TransactionCreationScreen = observer(function TransactionCreationSc
         }
       }
 
+      const transaction = {
+        id: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000 + "",
+        amount: formValues.amount,
+        createdAt: moment().unix(),
+        currency: "VND" as any,
+        description: formValues.description,
+        from: formValues.type === "IN" ? formValues.from : "spendAccount",
+        to: formValues.type === "IN" ? "spendAccount" : formValues.destination,
+        type: formValues.type,
+        category: selectedCategory,
+      }
+
       setGlobalState({
         user: {
           ...state.user,
           transactions: (() => {
-            state.user.transactions.push({
-              id: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000 + "",
-              amount: formValues.amount,
-              createdAt: moment().unix(),
-              currency: "VND",
-              description: formValues.description,
-              from: formValues.type === "IN" ? formValues.from : "spendAccount",
-              to: formValues.type === "IN" ? "spendAccount" : formValues.destination,
-              type: formValues.type,
-              category: selectedCategory,
-            })
+            state.user.transactions.push(transaction)
             return state.user.transactions
           })(),
+          template: {
+            ...state.user.template,
+            [TEMPLATE_NAME]: {
+              ...state.user.template[TEMPLATE_NAME],
+              [selectedCategory]: {
+                ...state.user.template[TEMPLATE_NAME][selectedCategory],
+                data: (() => {
+                  state.user.template[TEMPLATE_NAME][selectedCategory].data.push(transaction)
+                  return state.user.template[TEMPLATE_NAME][selectedCategory].data
+                })(),
+              },
+            },
+          },
         },
       })
       Alert.alert("Transaction is added successfully!")

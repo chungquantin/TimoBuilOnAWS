@@ -9,6 +9,7 @@ import { TransactionItem } from "../TransactionItem"
 import { useStores } from "../../models"
 import { useIsFocused, useNavigation } from "@react-navigation/core"
 import { GlobalContext } from "../../constants/CONTEXT"
+import { formatByUnit } from "../../utils/currency"
 
 export const TimoTransactionListScreen = observer(function TimoTransactionListScreen() {
   const isFocused = useIsFocused()
@@ -53,12 +54,15 @@ export const TimoTransactionListScreen = observer(function TimoTransactionListSc
                 <Text
                   style={{ fontSize: 18, marginTop: 5, fontWeight: "bold", color: color.primary }}
                 >
-                  {state.user.transactions.length !== 0
-                    ? state.user.transactions
-                        .filter((transaction) => transaction.type === "IN")
-                        .map((transaction) => transaction.amount)
-                        .reduce((a, b) => a + b)
-                    : 0}
+                  {formatByUnit(
+                    state.user.transactions.length !== 0
+                      ? state.user.transactions
+                          .filter((transaction) => transaction.type === "IN")
+                          .map((transaction) => transaction.amount)
+                          .reduce((a, b) => a + b)
+                      : 0,
+                    "VND",
+                  )}
                 </Text>
               </View>
               <View style={{ height: "100%", width: 1, backgroundColor: color.palette.offWhite }} />
@@ -67,12 +71,15 @@ export const TimoTransactionListScreen = observer(function TimoTransactionListSc
                 <Text
                   style={{ fontSize: 18, marginTop: 5, fontWeight: "bold", color: color.primary }}
                 >
-                  {state.user.transactions.length !== 0
-                    ? state.user.transactions
-                        .filter((transaction) => transaction.type === "OUT")
-                        .map((transaction) => transaction.amount)
-                        .reduce((a, b) => a + b)
-                    : 0}
+                  {formatByUnit(
+                    state.user.transactions.length !== 0
+                      ? state.user.transactions
+                          .filter((transaction) => transaction.type === "OUT")
+                          .map((transaction) => transaction.amount)
+                          .reduce((a, b) => a + b)
+                      : 0,
+                    "VND",
+                  )}
                 </Text>
               </View>
             </View>
