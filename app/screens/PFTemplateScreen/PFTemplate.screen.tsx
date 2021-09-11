@@ -129,11 +129,13 @@ export const PFTemplateScreen = observer(function PFTemplateScreen() {
                   <Text style={{ marginTop: 5, fontSize: 12, color: color.palette.offGray }}>
                     {state.user.template &&
                       formatByUnit(
-                        TEMPLATE[category].data
-                          .map((transaction) =>
-                            transaction.type === "IN" ? transaction.amount : transaction.amount,
-                          )
-                          .reduce((a, b) => a + b),
+                        TEMPLATE[category].data.length > 0
+                          ? TEMPLATE[category].data
+                              .map((transaction) =>
+                                transaction.type === "IN" ? transaction.amount : transaction.amount,
+                              )
+                              .reduce((a, b) => a + b)
+                          : 0,
                         "VND",
                       )}
                   </Text>

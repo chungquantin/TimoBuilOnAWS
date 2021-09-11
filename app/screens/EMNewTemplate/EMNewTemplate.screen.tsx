@@ -18,18 +18,18 @@ export const EMNewTemplateScreen = observer(function EMNewTemplateScreen() {
     name: "",
   })
   React.useEffect(() => {
-    // Alert.alert(
-    //  "Notice",
-    //  "The shared information won't be send to any 3rd party and only used for analytics purpose that can help us to bring you smarter Goal Save.",
-    //  [
-    //    {
-    //      text: "Agree",
-    //    },
-    //    {
-    //      text: "Ask app not to track",
-    //    },
-    //  ],
-    // )
+    Alert.alert(
+      "Notice",
+      "The shared information won't be send to any 3rd party and only used for analytics purpose that can help us to bring you smarter Goal Save.",
+      [
+        {
+          text: "Agree",
+        },
+        {
+          text: "Ask app not to track",
+        },
+      ],
+    )
   }, [])
   const handler = {
     AddNewCategory: () => {
