@@ -7,11 +7,10 @@ import { Button, Screen, Text } from "../../components"
 import Style from "./PFTemplate.style"
 import { color } from "../../theme"
 import { formatByUnit } from "../../utils/currency"
-import { MOCK_USER } from "../../constants/RICH_USER"
-import { ProgressChartData } from "react-native-chart-kit/dist/ProgressChart"
 import { ChartConfig } from "react-native-chart-kit/dist/HelperTypes"
-import { ProgressChart } from "react-native-chart-kit"
+import { StackedBarChart } from "react-native-chart-kit"
 import { GlobalContext } from "../../constants/CONTEXT"
+import { useNavigation } from "@react-navigation/core"
 
 const chartConfig: ChartConfig = {
   backgroundGradientFrom: color.background,
@@ -40,19 +39,27 @@ const colorList = [
 
 export const PFTemplateScreen = observer(function PFTemplateScreen() {
   const { state } = React.useContext(GlobalContext)
-  const data: ProgressChartData = {
-    labels: Object.keys(MOCK_USER.template.Sheet1), // optional
-    data: Object.keys(MOCK_USER.template.Sheet1).map(
-      (category) =>
-        MOCK_USER.template.Sheet1[category].data
-          .map((transaction) =>
-            transaction.type === "IN" ? transaction.amount : transaction.amount,
-          )
-          .reduce((a, b) => a + b) / MOCK_USER.template.Sheet1[category].range,
-    ),
-    colors: colorList,
-  }
+  const navigator = useNavigation()
   const TEMPLATE = state.user.template?.[Object.keys(state.user.template)[0]] || {}
+  const data = {
+    labels: ["Planned Expenditure", "Actual Expenditure"],
+    legend: Object.keys(TEMPLATE),
+    data: [
+      Object.keys(TEMPLATE).map((category) => TEMPLATE[category].range),
+      Object.keys(TEMPLATE).map((category) =>
+        TEMPLATE[category].data.length > 0
+          ? TEMPLATE[category].data
+              .filter((transaction) => transaction.type === "OUT")
+              .map((transaction) => transaction.amount)
+              .reduce((a, b) => a + b)
+          : 0,
+      ),
+    ],
+    barColors: colorList,
+  }
+  const handler = {
+    AddNewTemplate: () => navigator.navigate("AddNewTemplate" as any),
+  }
   return (
     <View testID="PFTemplateScreen" style={Style.Container}>
       <Screen unsafe={true} preset="scroll">
@@ -73,25 +80,24 @@ export const PFTemplateScreen = observer(function PFTemplateScreen() {
             }}
           >
             {Object.keys(state.user.template).length !== 0 ? (
-              <></>
+              <StackedBarChart
+                hideLegend={true}
+                data={data}
+                width={320}
+                height={200}
+                chartConfig={chartConfig}
+              />
             ) : (
               <View style={{ alignItems: "center", width: "100%" }}>
                 <Text>No template</Text>
-                <Button style={{ width: "100%", marginTop: 20, backgroundColor: color.primary }}>
+                <Button
+                  onPress={handler.AddNewTemplate}
+                  style={{ width: "100%", marginTop: 20, backgroundColor: color.primary }}
+                >
                   <Text style={{ color: color.palette.white }}>Add new template</Text>
                 </Button>
               </View>
             )}
-            {/*<ProgressChart
-              withCustomBarColorFromData
-              data={data}
-              width={300}
-              height={200}
-              strokeWidth={10}
-              radius={32}
-              chartConfig={chartConfig}
-              hideLegend={true}
-            /> */}
           </View>
           <View style={{ marginTop: 10 }}>
             {Object.keys(TEMPLATE).map((category, index) => (

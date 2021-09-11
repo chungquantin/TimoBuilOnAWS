@@ -14,7 +14,6 @@ import { Text } from "../components"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { LinearGradient } from "expo-linear-gradient"
 import { Ionicons } from "@expo/vector-icons"
-import { MOCK_USER } from "../constants/RICH_USER"
 import { GlobalContext } from "../constants/CONTEXT"
 
 const Tab = createBottomTabNavigator()

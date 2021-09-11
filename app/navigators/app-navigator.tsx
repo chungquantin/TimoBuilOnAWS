@@ -15,7 +15,7 @@ import { color } from "../theme"
 import { PFTabs } from "./PFTabs"
 import { PFAddNewGoalScreen } from "../screens/PFAddNewGoal/PFAddNewGoal.screen"
 import { GlobalContext } from "../constants/CONTEXT"
-import { AccountDashboardScreen, TransactionCreationScreen } from "../screens"
+import { AccountDashboardScreen, EMNewTemplateScreen, TransactionCreationScreen } from "../screens"
 
 export type NavigatorParamList = {
   AccountDashboard: undefined
@@ -23,6 +23,7 @@ export type NavigatorParamList = {
   PFDashboard: undefined
   AddNewGoal: undefined
   TransactionCreation: undefined
+  AddNewTemplate: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -48,7 +49,7 @@ const AppStack = () => {
       }}
       initialRouteName="TimoDashboard"
     >
-      {state.user.id !== "" ? (
+      {state.user !== "" ? (
         <>
           <Stack.Screen
             options={{ headerShown: false }}
@@ -69,6 +70,11 @@ const AppStack = () => {
             options={{ headerTitle: "Add New Transaction" }}
             name="TransactionCreation"
             component={TransactionCreationScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: true, headerTitle: "Add New Template" }}
+            name="AddNewTemplate"
+            component={EMNewTemplateScreen}
           />
         </>
       ) : (

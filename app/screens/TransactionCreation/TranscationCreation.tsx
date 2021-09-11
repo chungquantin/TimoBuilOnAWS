@@ -13,7 +13,7 @@ import { useStores } from "../../models"
 export const TransactionCreationScreen = observer(function TransactionCreationScreen() {
   const { setGlobalState, state } = React.useContext(GlobalContext)
   const { transactionStore } = useStores()
-  const TEMPLATE = state.user.template?.[Object.keys(state.user.template)[0]]
+  const TEMPLATE = state.user.template?.[Object.keys(state.user.template)[0]] || {}
   const TEMPLATE_NAME = state.user.template && Object.keys(state.user.template)[0]
   const [selectedCategory, setSelectedCategory] = React.useState(Object.keys(TEMPLATE)[0])
   const [formValues, setFormValues] = React.useState<{
@@ -33,7 +33,8 @@ export const TransactionCreationScreen = observer(function TransactionCreationSc
     Add: () => {
       if (
         formValues.amount <= 0 ||
-        formValues.amount > transactionStore.getTransactionBalance(state.user.transactions)
+        (formValues.type === "OUT" &&
+          formValues.amount > transactionStore.getTransactionBalance(state.user.transactions))
       ) {
         return Alert.alert("Amount is invalid")
       }
@@ -229,7 +230,7 @@ export const TransactionCreationScreen = observer(function TransactionCreationSc
             />
           </View>
         )}
-        {TEMPLATE && (
+        {Object.keys(TEMPLATE).length > 0 && (
           <View style={{ marginTop: 20 }}>
             <Text>Category</Text>
             <View style={{ alignItems: "center" }}>
