@@ -37,7 +37,7 @@ export const PFDashboardScreen = observer(function PFDashboardScreen() {
           </View>
           <View style={{ flex: 2 }}>
             <Text style={{ fontWeight: "bold", color: color.primary }}>Piggy Bank 🐷</Text>
-            <Text>Available Balance</Text>
+            <Text>Số dư khả dụng</Text>
             <Text style={{ fontWeight: "bold", fontSize: 25, marginTop: 5, color: color.primary }}>
               {transactionStore.getTransactionBalance(state.user.transactions)}
             </Text>
@@ -57,14 +57,14 @@ export const PFDashboardScreen = observer(function PFDashboardScreen() {
                   color: color.palette.timoPurple,
                 }}
               >
-                From {moment.unix(goal.create_date).format("DD-MM-YY")}
+                Từ {moment.unix(goal.create_date).format("DD-MM-YY")}
               </Text>
               <Text
                 style={{
                   color: color.palette.timoPurple,
                 }}
               >
-                To {moment.unix(goal.end_date).format("DD-MM-YY")}
+                Đến {moment.unix(goal.end_date).format("DD-MM-YY")}
               </Text>
             </View>
             <Text
@@ -82,7 +82,7 @@ export const PFDashboardScreen = observer(function PFDashboardScreen() {
                 flexDirection: "row",
               }}
             >
-              <Text>Progress: </Text>
+              <Text>Tiến trình: </Text>
               <Text
                 style={{
                   color: color.palette.timoPurple,
@@ -106,7 +106,7 @@ export const PFDashboardScreen = observer(function PFDashboardScreen() {
                 marginTop: 5,
               }}
             >
-              <Text>Weekly Amount: </Text>
+              <Text>Chi tiêu hàng tuần: </Text>
               <Text
                 style={{
                   color: color.palette.timoPurple,
@@ -127,7 +127,9 @@ export const PFDashboardScreen = observer(function PFDashboardScreen() {
               alignItems: "center",
             }}
           >
-            <Text style={{ color: color.palette.white, fontWeight: "bold" }}>+ Add new goal</Text>
+            <Text style={{ color: color.palette.white, fontWeight: "bold" }}>
+              + Tạo mục tiêu mới
+            </Text>
           </View>
         </TouchableOpacity>
       </Screen>

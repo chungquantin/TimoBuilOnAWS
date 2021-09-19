@@ -56,7 +56,7 @@ const TabItems = (
   {
     headerShown: false,
     key: "template-tab",
-    name: "Template",
+    name: "Mẫu quản lý tài chính",
     component: PFTemplateScreen,
     layout: ({ focused }) => (
       <View style={Style.TabItemsView}>
@@ -71,7 +71,7 @@ const TabItems = (
             ...Style.TabItemsLabel,
           }}
         >
-          Template
+          Mẫu
         </Text>
       </View>
     ),
@@ -79,7 +79,7 @@ const TabItems = (
   {
     headerShown: false,
     key: "game-tab",
-    name: "Game",
+    name: "Trò chơi",
     component: PFGameScreen,
     layout: ({ focused }) => (
       <View style={Style.TabItemsView}>
@@ -94,7 +94,7 @@ const TabItems = (
             ...Style.TabItemsLabel,
           }}
         >
-          Game
+          Trò chơi
         </Text>
       </View>
     ),

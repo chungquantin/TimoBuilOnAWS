@@ -19,8 +19,8 @@ export const EMNewTemplateScreen = observer(function EMNewTemplateScreen() {
   })
   React.useEffect(() => {
     Alert.alert(
-      "Notice",
-      "The shared information won't be send to any 3rd party and only used for analytics purpose that can help us to bring you smarter Goal Save.",
+      "Lưu ý",
+      "Thông tin được chia sẻ sẻ không được gửi đến bất kỳ bên thứ ba và chỉ được sử dụng cho mục đích phân tích nhằm giúp đỡ Timo đem đến bạn Goal Save thông minh hơn",
       [
         {
           text: "Agree",
@@ -80,7 +80,7 @@ export const EMNewTemplateScreen = observer(function EMNewTemplateScreen() {
         preset="scroll"
       >
         <View>
-          <Text>Template name</Text>
+          <Text>Tên mẫu</Text>
           <TextInput
             value={formValues.name.toString()}
             onChangeText={(text) =>
@@ -96,7 +96,7 @@ export const EMNewTemplateScreen = observer(function EMNewTemplateScreen() {
               marginTop: 10,
               borderRadius: 10,
             }}
-            placeholder="Enter template name"
+            placeholder="Nhập vào tên của mẫu"
           />
         </View>
         {Object.keys(categories).map((category) => (
@@ -110,7 +110,7 @@ export const EMNewTemplateScreen = observer(function EMNewTemplateScreen() {
         ))}
         <View style={{ ...Style.Card, marginTop: 10 }}>
           <View>
-            <Text>Category</Text>
+            <Text>Mục</Text>
             <TextInput
               value={formValues.category}
               onChangeText={(text) =>
@@ -130,7 +130,7 @@ export const EMNewTemplateScreen = observer(function EMNewTemplateScreen() {
             />
           </View>
           <View style={{ marginTop: 10 }}>
-            <Text>Range</Text>
+            <Text>Hạn mức</Text>
             <TextInput
               value={formValues.range}
               onChangeText={(text) =>
@@ -153,11 +153,11 @@ export const EMNewTemplateScreen = observer(function EMNewTemplateScreen() {
             style={{ backgroundColor: color.primary, marginTop: 20 }}
             onPress={handler.AddNewCategory}
           >
-            <Text style={{ color: color.palette.white }}>Add category</Text>
+            <Text style={{ color: color.palette.white }}>Thêm mục</Text>
           </Button>
         </View>
         <Button style={{ backgroundColor: color.primary }} onPress={handler.AddNewTemplate}>
-          <Text style={{ color: color.palette.white }}>Add Template</Text>
+          <Text style={{ color: color.palette.white }}>Thêm mẫu</Text>
         </Button>
       </Screen>
     </View>

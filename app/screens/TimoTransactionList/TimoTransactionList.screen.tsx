@@ -41,7 +41,7 @@ export const TimoTransactionListScreen = observer(function TimoTransactionListSc
         <View style={{ ...Style.Container, paddingTop: 20 }}>
           <View style={{ ...Style.Card, marginHorizontal: 20 }}>
             <View style={{ alignItems: "center", marginBottom: 25 }}>
-              <Text>Available balance</Text>
+              <Text>Số dư khả dụng</Text>
               <Text
                 style={{ fontSize: 25, marginTop: 5, fontWeight: "bold", color: color.primary }}
               >
@@ -50,7 +50,7 @@ export const TimoTransactionListScreen = observer(function TimoTransactionListSc
             </View>
             <View style={{ flexDirection: "row" }}>
               <View style={{ flex: 1, alignItems: "center" }}>
-                <Text>Income</Text>
+                <Text>Thu nhập</Text>
                 <Text
                   style={{ fontSize: 18, marginTop: 5, fontWeight: "bold", color: color.primary }}
                 >
@@ -67,7 +67,7 @@ export const TimoTransactionListScreen = observer(function TimoTransactionListSc
               </View>
               <View style={{ height: "100%", width: 1, backgroundColor: color.palette.offWhite }} />
               <View style={{ flex: 1, alignItems: "center" }}>
-                <Text>Expense</Text>
+                <Text>Chi tiêu</Text>
                 <Text
                   style={{ fontSize: 18, marginTop: 5, fontWeight: "bold", color: color.primary }}
                 >
@@ -93,7 +93,7 @@ export const TimoTransactionListScreen = observer(function TimoTransactionListSc
                 marginTop: 50,
               }}
             >
-              <Text>You don't have any transaction</Text>
+              <Text>Bạn chưa có giao dịch</Text>
               <Button
                 onPress={handler.AddNewTransaction}
                 style={{
@@ -103,7 +103,7 @@ export const TimoTransactionListScreen = observer(function TimoTransactionListSc
                   paddingVertical: 10,
                 }}
               >
-                <Text style={{ color: color.palette.white }}>Add new transaction</Text>
+                <Text style={{ color: color.palette.white }}>Tạo giao dịch mới</Text>
               </Button>
             </View>
           ) : (

@@ -67,7 +67,7 @@ export const TimoTabs = observer(function Tabs() {
               ...Style.TabItemsLabel,
             }}
           >
-            Home
+            Trang chủ
           </Text>
         </View>
       ),
@@ -76,7 +76,7 @@ export const TimoTabs = observer(function Tabs() {
     {
       headerShown: true,
       key: "transfer-code",
-      name: "Add new transaction",
+      name: "Tạo giao dịch mới",
       component: TransactionCreationScreen,
       layout: () => <Ionicons name="add" color={color.palette.offWhite} size={25} />,
       buttonLayout: (props) => <TabBarCustomButton {...props} />,
@@ -84,7 +84,7 @@ export const TimoTabs = observer(function Tabs() {
     {
       headerShown: true,
       key: "history-tab",
-      name: "History",
+      name: "Lịch sử giao dịch",
       component: TimoTransactionListScreen,
       layout: ({ focused }) => (
         <View style={Style.TabItemsView}>
@@ -99,7 +99,7 @@ export const TimoTabs = observer(function Tabs() {
               ...Style.TabItemsLabel,
             }}
           >
-            History
+            Lịch sử giao dịch
           </Text>
         </View>
       ),

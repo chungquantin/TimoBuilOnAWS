@@ -95,7 +95,7 @@ export const TimoDashboardScreen = observer(function TimoDashboardScreen() {
         </View>
       </View>
       <Button style={{ backgroundColor: color.palette.timoRed }} onPress={handler.Logout}>
-        <Text style={{ color: color.palette.white }}>Log out</Text>
+        <Text style={{ color: color.palette.white }}>Đăng xuất</Text>
       </Button>
     </View>
   )

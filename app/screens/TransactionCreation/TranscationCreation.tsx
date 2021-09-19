@@ -99,7 +99,7 @@ export const TransactionCreationScreen = observer(function TransactionCreationSc
     <View testID="TransactionCreationScreen" style={Style.Container}>
       <Screen style={{ paddingHorizontal: 25 }}>
         <View>
-          <Text>Amount</Text>
+          <Text>Số tiền</Text>
           <TextInput
             value={formValues.amount.toString()}
             onChangeText={(text) =>
@@ -115,7 +115,7 @@ export const TransactionCreationScreen = observer(function TransactionCreationSc
               marginTop: 10,
               borderRadius: 10,
             }}
-            placeholder="Enter transaction amount"
+            placeholder="Nhập vào số tiền của giao dịch"
           />
         </View>
         <View style={{ flexDirection: "row", marginTop: 20 }}>
@@ -140,7 +140,7 @@ export const TransactionCreationScreen = observer(function TransactionCreationSc
                 color: formValues.type === "OUT" ? color.palette.white : color.palette.tintBlack,
               }}
             >
-              Transfer
+              Chuyển
             </Text>
           </Button>
           <Button
@@ -163,12 +163,12 @@ export const TransactionCreationScreen = observer(function TransactionCreationSc
                 color: formValues.type === "IN" ? color.palette.white : color.palette.tintBlack,
               }}
             >
-              Deposit
+              Nạp
             </Text>
           </Button>
         </View>
         <View style={{ marginTop: 20 }}>
-          <Text>Description</Text>
+          <Text>Mô tả</Text>
           <TextInput
             value={formValues.description.toString()}
             onChangeText={(text) =>
@@ -189,7 +189,7 @@ export const TransactionCreationScreen = observer(function TransactionCreationSc
         </View>
         {formValues.type === "IN" ? (
           <View style={{ marginTop: 20 }}>
-            <Text>From</Text>
+            <Text>Từ</Text>
             <TextInput
               value={formValues.from.toString()}
               onChangeText={(text) =>
@@ -210,7 +210,7 @@ export const TransactionCreationScreen = observer(function TransactionCreationSc
           </View>
         ) : (
           <View style={{ marginTop: 20 }}>
-            <Text>Destination</Text>
+            <Text>Đến</Text>
             <TextInput
               value={formValues.destination.toString()}
               onChangeText={(text) =>
@@ -255,7 +255,7 @@ export const TransactionCreationScreen = observer(function TransactionCreationSc
             paddingVertical: 15,
           }}
         >
-          <Text style={{ color: color.palette.white }}>Add</Text>
+          <Text style={{ color: color.palette.white }}>Thêm giao dịch</Text>
         </Button>
       </Screen>
     </View>

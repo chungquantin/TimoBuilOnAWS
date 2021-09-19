@@ -3,7 +3,7 @@
 import React from "react"
 import { View } from "react-native"
 import { observer } from "mobx-react-lite"
-import { Button, Screen, Text } from "../../components"
+import { Screen, Text } from "../../components"
 import Style from "./PFTemplate.style"
 import { color } from "../../theme"
 import { formatByUnit } from "../../utils/currency"
@@ -11,6 +11,8 @@ import { ChartConfig } from "react-native-chart-kit/dist/HelperTypes"
 import { StackedBarChart } from "react-native-chart-kit"
 import { GlobalContext } from "../../constants/CONTEXT"
 import { useNavigation } from "@react-navigation/core"
+import { TouchableOpacity } from "react-native-gesture-handler"
+import { PFTemplateListScreen } from ".."
 
 const chartConfig: ChartConfig = {
   backgroundGradientFrom: color.background,
@@ -42,7 +44,7 @@ export const PFTemplateScreen = observer(function PFTemplateScreen() {
   const navigator = useNavigation()
   const TEMPLATE = state.user.template?.[Object.keys(state.user.template)[0]] || {}
   const data = {
-    labels: ["Planned Expenditure", "Actual Expenditure"],
+    labels: ["Chi tiêu kế hoạch", "Chi tiêu thực tế"],
     legend: Object.keys(TEMPLATE),
     data: [
       Object.keys(TEMPLATE).map((category) => TEMPLATE[category].range),
@@ -59,17 +61,20 @@ export const PFTemplateScreen = observer(function PFTemplateScreen() {
   }
   const handler = {
     AddNewTemplate: () => navigator.navigate("AddNewTemplate" as any),
+    SelectTemplate: () => navigator.navigate("TemplateList" as any),
   }
   return (
     <View testID="PFTemplateScreen" style={Style.Container}>
       <Screen unsafe={true} preset="scroll">
         <View style={{ ...Style.Card, paddingVertical: 15 }}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Text style={{ fontWeight: "bold" }}>Template</Text>
-            <Text style={{ color: color.palette.offGray }}>
-              {Object.keys(state.user.template)[0]}
-            </Text>
-          </View>
+          <TouchableOpacity onPress={handler.SelectTemplate}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+              <Text style={{ fontWeight: "bold" }}>Mẫu quản lý chi tiêu</Text>
+              <Text style={{ color: color.palette.offGray }}>
+                {Object.keys(state.user.template)[0]}
+              </Text>
+            </View>
+          </TouchableOpacity>
           <View
             style={{
               alignItems: "center",
@@ -88,15 +93,7 @@ export const PFTemplateScreen = observer(function PFTemplateScreen() {
                 chartConfig={chartConfig}
               />
             ) : (
-              <View style={{ alignItems: "center", width: "100%" }}>
-                <Text>No template</Text>
-                <Button
-                  onPress={handler.AddNewTemplate}
-                  style={{ width: "100%", marginTop: 20, backgroundColor: color.primary }}
-                >
-                  <Text style={{ color: color.palette.white }}>Add new template</Text>
-                </Button>
-              </View>
+              <PFTemplateListScreen />
             )}
           </View>
           <View style={{ marginTop: 10 }}>

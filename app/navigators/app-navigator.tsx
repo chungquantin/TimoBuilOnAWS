@@ -15,12 +15,18 @@ import { color } from "../theme"
 import { PFTabs } from "./PFTabs"
 import { PFAddNewGoalScreen } from "../screens/PFAddNewGoal/PFAddNewGoal.screen"
 import { GlobalContext } from "../constants/CONTEXT"
-import { AccountDashboardScreen, EMNewTemplateScreen, TransactionCreationScreen } from "../screens"
+import {
+  AccountDashboardScreen,
+  EMNewTemplateScreen,
+  PFTemplateListScreen,
+  TransactionCreationScreen,
+} from "../screens"
 
 export type NavigatorParamList = {
   AccountDashboard: undefined
   TimoDashboard: undefined
   PFDashboard: undefined
+  TemplateList: undefined
   AddNewGoal: undefined
   TransactionCreation: undefined
   AddNewTemplate: undefined
@@ -49,7 +55,7 @@ const AppStack = () => {
       }}
       initialRouteName="TimoDashboard"
     >
-      {state.user !== "" ? (
+      {state.user.id !== "" ? (
         <>
           <Stack.Screen
             options={{ headerShown: false }}
@@ -57,30 +63,35 @@ const AppStack = () => {
             component={TimoTabs}
           />
           <Stack.Screen
-            options={{ headerTitle: "Personal Finance" }}
+            options={{ headerTitle: "Tài chính cá nhân" }}
             name="PFDashboard"
             component={PFTabs}
           />
           <Stack.Screen
-            options={{ headerTitle: "Add New Goal" }}
+            options={{ headerTitle: "Thêm mục tiêu mới" }}
             name="AddNewGoal"
             component={PFAddNewGoalScreen}
           />
           <Stack.Screen
-            options={{ headerTitle: "Add New Transaction" }}
+            options={{ headerTitle: "Thêm giao dịch mới" }}
             name="TransactionCreation"
             component={TransactionCreationScreen}
           />
           <Stack.Screen
-            options={{ headerShown: true, headerTitle: "Add New Template" }}
+            options={{ headerShown: true, headerTitle: "Thêm mẫu mới" }}
             name="AddNewTemplate"
             component={EMNewTemplateScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: true, headerTitle: "Mẫu" }}
+            name="TemplateList"
+            component={PFTemplateListScreen}
           />
         </>
       ) : (
         <>
           <Stack.Screen
-            options={{ headerShown: true, headerTitle: "Account" }}
+            options={{ headerShown: true, headerTitle: "Tài khoản" }}
             name="AccountDashboard"
             component={AccountDashboardScreen}
           />
