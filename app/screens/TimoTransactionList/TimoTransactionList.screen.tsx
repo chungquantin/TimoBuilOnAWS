@@ -10,6 +10,9 @@ import { useStores } from "../../models"
 import { useIsFocused, useNavigation } from "@react-navigation/core"
 import { GlobalContext } from "../../constants/CONTEXT"
 import { formatByUnit } from "../../utils/currency"
+import { AutoImage } from "../../components/auto-image/auto-image"
+
+const ChartIcon = require("../../../assets/icon/chart-icon.png")
 
 export const TimoTransactionListScreen = observer(function TimoTransactionListScreen() {
   const isFocused = useIsFocused()
@@ -88,11 +91,18 @@ export const TimoTransactionListScreen = observer(function TimoTransactionListSc
             <View
               style={{
                 alignItems: "center",
-                marginBottom: 50,
+                marginBottom: 250,
                 paddingHorizontal: 20,
                 marginTop: 50,
               }}
             >
+              <View style={{ alignItems: "center", justifyContent: "center" }}>
+                <AutoImage
+                  source={ChartIcon}
+                  resizeMode="cover"
+                  style={{ height: 150, width: 100, marginBottom: 30 }}
+                />
+              </View>
               <Text>Bạn chưa có giao dịch</Text>
               <Button
                 onPress={handler.AddNewTransaction}

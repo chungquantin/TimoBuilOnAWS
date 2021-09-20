@@ -18,6 +18,7 @@ import { GlobalContext } from "../constants/CONTEXT"
 import {
   AccountDashboardScreen,
   EMNewTemplateScreen,
+  EMTemplateScreen,
   PFTemplateListScreen,
   TransactionCreationScreen,
 } from "../screens"
@@ -30,6 +31,7 @@ export type NavigatorParamList = {
   AddNewGoal: undefined
   TransactionCreation: undefined
   AddNewTemplate: undefined
+  Template: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -55,7 +57,7 @@ const AppStack = () => {
       }}
       initialRouteName="TimoDashboard"
     >
-      {state.user.id !== "" ? (
+      {state.user !== "" ? (
         <>
           <Stack.Screen
             options={{ headerShown: false }}
@@ -86,6 +88,11 @@ const AppStack = () => {
             options={{ headerShown: true, headerTitle: "Mẫu" }}
             name="TemplateList"
             component={PFTemplateListScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: true, headerTitle: "Mẫu" }}
+            name="Template"
+            component={EMTemplateScreen}
           />
         </>
       ) : (

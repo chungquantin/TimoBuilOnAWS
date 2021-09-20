@@ -66,7 +66,7 @@ export const PFTemplateScreen = observer(function PFTemplateScreen() {
   return (
     <View testID="PFTemplateScreen" style={Style.Container}>
       <Screen unsafe={true} preset="scroll">
-        <View style={{ ...Style.Card, paddingVertical: 15 }}>
+        <View style={{ ...Style.Card }}>
           <TouchableOpacity onPress={handler.SelectTemplate}>
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
               <Text style={{ fontWeight: "bold" }}>Mẫu quản lý chi tiêu</Text>

@@ -70,7 +70,7 @@ export const EMNewTemplateScreen = observer(function EMNewTemplateScreen() {
         name: "",
       })
       setCategories({})
-      Alert.alert("Template added successfully!")
+      Alert.alert("Mẫu được thêm thành công!")
     },
   }
   return (
@@ -126,7 +126,7 @@ export const EMNewTemplateScreen = observer(function EMNewTemplateScreen() {
                 marginTop: 10,
                 borderRadius: 10,
               }}
-              placeholder="Enter category name"
+              placeholder="Nhập vào tên mục"
             />
           </View>
           <View style={{ marginTop: 10 }}>
